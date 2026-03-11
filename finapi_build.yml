@@ -1,0 +1,31 @@
+name: api-1.0.$(Build.BuildId)
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+    - '*.yml'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: artifactName
+    value: 'api'
+
+steps:
+- script: |
+    echo "Packaging api app..."
+    mkdir $(Build.ArtifactStagingDirectory)/package
+    cp application.py $(Build.ArtifactStagingDirectory)/package/
+    cp requirements.txt $(Build.ArtifactStagingDirectory)/package/
+  displayName: 'Package api Files'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/package'
+    artifact: '$(artifactName)'
+    publishLocation: 'pipeline'
+  displayName: 'Publish api Pipeline Artifact'
