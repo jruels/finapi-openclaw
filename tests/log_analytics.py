@@ -16,11 +16,7 @@ def send_log_to_loganalytics(log_type, log_data):
 
     body = json.dumps(log_data)
     timestamp = datetime.datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')
-    string_to_hash = f'POST
-{len(body)}
-application/json
-x-ms-date:{timestamp}
-/api/logs'
+    string_to_hash = f'POST\n{len(body)}\napplication/json\nx-ms-date:{timestamp}\n/api/logs'
     bytes_to_hash = bytes(string_to_hash, encoding='utf-8')
     decoded_key = base64.b64decode(shared_key)
     encoded_hash = base64.b64encode(
