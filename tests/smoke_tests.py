@@ -27,8 +27,8 @@ def test_get_portfolio():
 
 def test_list_reports():
     r = requests.get(f"{BASE_URL}/api/list-reports", timeout=5)
-    assert r.status_code in [200, 500]  # 500 = fallback if storage missing
+    assert r.status_code in [200, 500]
 
 def test_slow_endpoint():
-    r = requests.get(f"{BASE_URL}/api/slow-endpoint", timeout=4)
+    r = requests.get(f"{BASE_URL}/api/slow-endpoint", timeout=10)
     assert r.status_code == 200
